@@ -1,5 +1,12 @@
 import Square from "../Square/Square";
-import { INITIAL_SQUARES, PLAYER_COUNT, PLAYERS } from "../../constants";
+import {
+  checkWinner,
+  INITIAL_SQUARES,
+  PLAYER_COUNT,
+  PLAYERS,
+  WINNER_CONDITIONS,
+  WINNERS_COLOR,
+} from "../../constants";
 import S from "./Squares.module.css";
 import { useState } from "react";
 
@@ -11,7 +18,12 @@ function Squares() {
   const currentPlayer = isPlayerOneTurn ? PLAYERS.ONE : PLAYERS.TWO;
 
   const handleClick = (index: number) => () => {
-    console.log(`버튼 넘버는${index}`);
+    const winnerInfo = checkWinner(squares);
+    if (winnerInfo) {
+      alert("게임끝");
+      return;
+    }
+
     setSquares(
       squares.map((square, squaresIndex) => {
         if (squaresIndex === index) {
@@ -22,11 +34,24 @@ function Squares() {
     );
     console.log(squares);
   };
+
   return (
     <div className={S.component}>
       {squares.map((square, index) => {
+        const winnerStyle = {
+          backgroundColor: null,
+        };
+
+        if (checkWinner(squares)) {
+          const winnerInfo = checkWinner(squares);
+          console.log(winnerInfo?.condition);
+          const [x, y, z] = winnerInfo?.condition;
+          if (index === x || index === y || index === z) {
+            winnerStyle.backgroundColor = WINNERS_COLOR;
+          }
+        }
         return (
-          <Square key={index} onClick={handleClick(index)}>
+          <Square style={winnerStyle} key={index} onClick={handleClick(index)}>
             {square}
           </Square>
         );
