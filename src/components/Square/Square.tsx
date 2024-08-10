@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import S from "./Squares.module.css";
+import S from "./Square.module.css";
 
 interface SquarePropstype {
   children?: ReactNode;
