@@ -11,7 +11,10 @@ import S from "./Game.module.css";
 import "./styles/main.css";
 
 export function Game() {
-  const [gameHistory, setHisory] = useState(INITIAL_SQUARES);
+  const [gameHistory, setHistory] = useState(INITIAL_SQUARES);
+  const [gameCount, setGameCount] = useState(0);
+
+  const nextGameCount = gameCount + 1;
 
   const gameIndex = gameHistory.filter(Boolean).length;
   const isPlayerOneTurn = gameIndex % PLAYER_COUNT === 0;
@@ -24,14 +27,14 @@ export function Game() {
       return;
     }
 
-    setHisory(
+    setHistory(
       gameHistory.map((square, squaresIndex) => {
-        if (squaresIndex === index) {
-          return nextPlayer;
-        }
-        return square;
+        return squaresIndex === index ? nextPlayer : square;
       })
     );
+
+    setGameCount(nextGameCount);
+    console.log(gameHistory);
   };
 
   const winnerInfo = checkWinner(gameHistory);

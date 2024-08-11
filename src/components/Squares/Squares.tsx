@@ -8,7 +8,6 @@ import {
   WINNERS_COLOR,
 } from "../../constants";
 import S from "./Squares.module.css";
-
 import { useState } from "react";
 interface SquaresProps {
   squares: Array<string>;
