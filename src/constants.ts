@@ -34,4 +34,4 @@ export const checkWinner = (squares: Array<string>) => {
   return winnerInfo;
 };
 
-export const WINNERS_COLOR = "#fff047";
+export const WINNERS_COLOR: string | null = "#c4c4c4";

@@ -8,33 +8,14 @@ import {
   WINNERS_COLOR,
 } from "../../constants";
 import S from "./Squares.module.css";
+
 import { useState } from "react";
+interface SquaresProps {
+  squares: Array<string>;
+  onClick: (index: number) => void;
+}
 
-function Squares() {
-  const [squares, setSquares] = useState(INITIAL_SQUARES);
-
-  const gameIndex = squares.filter(Boolean).length;
-  const isPlayerOneTurn = gameIndex % PLAYER_COUNT === 0;
-  const currentPlayer = isPlayerOneTurn ? PLAYERS.ONE : PLAYERS.TWO;
-
-  const handleClick = (index: number) => () => {
-    const winnerInfo = checkWinner(squares);
-    if (winnerInfo) {
-      alert("게임끝");
-      return;
-    }
-
-    setSquares(
-      squares.map((square, squaresIndex) => {
-        if (squaresIndex === index) {
-          return currentPlayer;
-        }
-        return square;
-      })
-    );
-    console.log(squares);
-  };
-
+function Squares({ squares, onClick }: SquaresProps) {
   return (
     <div className={S.component}>
       {squares.map((square, index) => {
@@ -51,7 +32,7 @@ function Squares() {
           }
         }
         return (
-          <Square style={winnerStyle} key={index} onClick={handleClick(index)}>
+          <Square style={winnerStyle} key={index} onClick={onClick(index)}>
             {square}
           </Square>
         );
